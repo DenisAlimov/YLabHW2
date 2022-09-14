@@ -2,7 +2,6 @@ package Task3;
 
 public class Task3 {
     public static void main(String[] args) {
-
         assert fuzzySearch("car", "ca6$$#_rtwheel"); // true
         assert fuzzySearch("cwhl", "cartwheel"); // true
         assert fuzzySearch("cwhee", "cartwheel"); // true
@@ -12,23 +11,21 @@ public class Task3 {
     }
 
     static boolean fuzzySearch(String word, String letters) {
-        int n = 0;
-        int k = 0;
-
-        outerLoop:
-        for (int i = 0; i < word.length(); i++) {
-            for (int j = n; j < letters.length(); j++) {
-                if (word.charAt(i) == letters.charAt(j)) {
-                    if (j < letters.length() - 1) {
-                        n = j + 1;
-                    }
-                    k++;
-                    if (j == letters.length() - 1)
-                        break outerLoop;
-                }
+        if (word == null || letters == null || word.length() < 1 || letters.length() < word.length()) {
+            return false;
+        }
+        int charIndex = 0;
+        int charCounter = word.length();
+        for (int i = 0; i < letters.length(); i++) {
+            if (letters.charAt(i) == word.charAt(charIndex)) {
+                charIndex++;
+                charCounter--;
+            }
+            if (charCounter == 0) {
+                return true;
             }
         }
-        return k == word.length();
+        return false;
     }
 }
         /*
