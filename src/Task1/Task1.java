@@ -48,15 +48,16 @@ public class Task1 {
             new Person(6, "Amelia"),
             new Person(7, "Amelia"),
             new Person(8, "Amelia"),
+//            null
     };
 
     public static void main(String[] args) {
         System.out.println("Raw data:");
         System.out.println();
 
-        for (Person person : RAW_DATA) {
-            System.out.println(person.id + " - " + person.name);
-        }
+//        for (Person person : RAW_DATA) {
+//            System.out.println(person.id + " - " + person.name);
+//        }
 
         System.out.println();
         System.out.println("**************************************************");
@@ -66,18 +67,15 @@ public class Task1 {
 
 
         Map<String, List<Person>> map = new HashMap<>(Arrays.stream(RAW_DATA)
+                .filter(Objects::nonNull) // отфильтровал null
                 .distinct() //убрал дубликаты
                 .sorted(Comparator.comparing(Person::getId)) // отсортировал по id
                 .collect(Collectors.groupingBy(Person::getName) // сгруппировал по имени
                 ));
 
         for (Map.Entry<String, List<Person>> item : map.entrySet()) {
-            int n = 0;
-            System.out.println("Key: " + item.getKey());
-            for (Person person : item.getValue()) {
-                n++;
-            }
-            System.out.println("Value: " + n);
+            System.out.println("Key: " + item.getKey() + "\n" +
+                    "Value: " + item.getValue().size());
         }
     }
 }
