@@ -1,6 +1,8 @@
 package Task2;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 public class Task2 {
@@ -29,15 +31,20 @@ public class Task2 {
     }
 
     public static int[] twoSum(int[] arr, int sum) {
+        Map<Integer, Integer> memory = new HashMap<>();
         int[] result = new int[2];
         for (int i = 0; i < arr.length; i++) {
-            for (int j = 1; j < arr.length; j++) {
-                if (i != j && ((arr[i] + arr[j]) == sum)) {
-                    result[0] = arr[i];
-                    result[1] = arr[j];
-                    return result;
-                }
+            if (arr[i] >= sum) {
+                continue;
             }
+            int difference = sum - arr[i];
+            if (memory.containsKey(difference)) {
+                result[0] = arr[memory.get(difference)];
+                result[1] = arr[i];
+                return result;
+            }
+            memory.put(arr[i], i);
+
         }
         return null;
     }
